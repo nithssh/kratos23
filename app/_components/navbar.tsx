@@ -5,11 +5,20 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+// import { signIn, signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react'
+// import { UserAuth } from '../context/AuthContext'
+import { user, signInWithGoogle , signOutWithGoogle } from "../context/AuthContext"
+import { auth , googleProvider} from "../firebase" 
+import {signInWithPopup , signOut, onAuthStateChanged, GoogleAuthProvider } from "firebase/auth"
+
+
 
 const poly = Poly({
   weight: '400',
   subsets: ['latin'],
 })
+
 
 // TODO make the navbar slidein when scrolling down from top of homepage (hidden on initial load)
 // TODO look into the overlay blurring if needed
@@ -19,6 +28,11 @@ export default function Navbar() {
 
   const pathname = usePathname()
 
+  // const { user  } = UserAuth();
+  // console.log(user);
+
+  // const { data , user } = useSession();
+  
   useEffect(() => {
 
     if (typeof window == undefined) {
@@ -135,9 +149,11 @@ export default function Navbar() {
 
           {/* Signup button */}
           <div
-            onClick={() => {
-              alert('clicked')
-            }}
+            // onClick={() => {
+            //   alert('clicked')
+            // }}
+            onClick={ signInWithGoogle }
+          
             className={`min-w-[10ch] p-[1px] w-fit text-base  rounded-full font-semibold bg-gradient-to-br from-cherry to-vinyl cursor-pointer`}
           >
             <div
