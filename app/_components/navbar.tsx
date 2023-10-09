@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 // import { signIn, signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react'
 // import { UserAuth } from '../context/AuthContext'
-import { user, signInWithGoogle , signOutWithGoogle } from "../context/AuthContext"
+import { UserAuth } from "../context/AuthContext"
 import { auth , googleProvider} from "../firebase" 
 import {signInWithPopup , signOut, onAuthStateChanged, GoogleAuthProvider } from "firebase/auth"
 
@@ -28,8 +28,8 @@ export default function Navbar() {
 
   const pathname = usePathname()
 
-  // const { user  } = UserAuth();
-  // console.log(user);
+  const { user,signInWithGoogle , signOutWithGoogle  } = UserAuth();
+  console.log(user);
 
   // const { data , user } = useSession();
   
@@ -147,23 +147,32 @@ export default function Navbar() {
             Home
           </Link>
 
-          {/* Signup button */}
-          <div
-            // onClick={() => {
-            //   alert('clicked')
-            // }}
-            onClick={ signInWithGoogle }
-          
-            className={`min-w-[10ch] p-[1px] w-fit text-base  rounded-full font-semibold bg-gradient-to-br from-cherry to-vinyl cursor-pointer`}
-          >
-            <div
-              // TODO plug the inversion
-              className={`p-3 text-center rounded-full select-none 'bg-transparent text-void-950`}
-            >
-              Sign Up
-            </div>
-          </div>
+{ !user ? (
+        /* Signup button */
+        <div
+        // onClick={() => {
+        //   alert('clicked')
+        // }}
+        onClick={ signInWithGoogle }
+      
+        className={`min-w-[10ch] p-[1px] w-fit text-base  rounded-full font-semibold bg-gradient-to-br from-cherry to-vinyl cursor-pointer`}
+      >
+        <div
+          // TODO plug the inversion
+          className={`p-3 text-center rounded-full select-none 'bg-transparent text-void-950`}
+        >
+          Sign Up
         </div>
+      </div>
+
+
+) : (
+  <div>
+    hello
+  </div>
+)
+}
+</div>
 
         {/* Top Three options */}
         <Link

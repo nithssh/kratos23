@@ -1,8 +1,9 @@
-"use client"
-import { useContext ,  createContext , useState , useEffect} from "react"
+'use client'
+
+import { useContext ,  createContext , useState , useEffect} from 'react'
 import {signInWithPopup , signOut, onAuthStateChanged, GoogleAuthProvider } from "firebase/auth"
 import  { firebase } from "firebase/app"
-import { auth } from "../firebase" 
+import { auth, googleProvider } from "../firebase" 
 
 const AuthContext = createContext()
 
@@ -10,8 +11,7 @@ export const AuthContextProvider = ({children}) => {
 
     const [ user, setUser ] = useState(null)
 
-     
-//     // sign in
+//     // sign i
 //     const googleSignIn = () => {
 //         // const provider = new GoogleAuthProvider()
 //         // signInWithPopup(auth,provider)
@@ -76,7 +76,7 @@ export const AuthContextProvider = ({children}) => {
 const signInWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      // console.log("going to sign in")
+      console.log("going to sign in")
     } catch (err) {
       console.error(err);
     }
@@ -93,8 +93,15 @@ const signInWithGoogle = async () => {
     }
   };
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth , (currentUser) => {
+        setUser(currentUser);
+    });
+    return () => unsubscribe();
+  },[user]);
+
     return (
-        <AuthContext.Provider value={user, signInWithGoogle , signOutWithGoogle}>
+        <AuthContext.Provider value={{user, signInWithGoogle , signOutWithGoogle}}>
             {children}
         </AuthContext.Provider>
 
@@ -103,4 +110,4 @@ const signInWithGoogle = async () => {
 
 export const UserAuth = () => {
     return useContext(AuthContext);
-}
+};
