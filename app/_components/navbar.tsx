@@ -5,12 +5,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-// import { signIn, signOut } from 'next-auth/react';
-import { useSession } from 'next-auth/react'
-// import { UserAuth } from '../context/AuthContext'
 import { UserAuth } from "../context/AuthContext"
 import { auth , googleProvider} from "../firebase" 
-import {signInWithPopup , signOut, onAuthStateChanged, GoogleAuthProvider } from "firebase/auth"
 
 
 
@@ -147,7 +143,7 @@ export default function Navbar() {
             Home
           </Link>
 
-{ !user ? (
+     { !user ? (
         /* Signup button */
         <div
         // onClick={() => {
@@ -166,13 +162,13 @@ export default function Navbar() {
       </div>
 
 
-) : (
-  <div>
-    hello
-  </div>
-)
-}
-</div>
+   ) : (
+    
+     <img src={user.photoURL} className = "w-10 h-10 rounded-3xl"/>
+    
+   )
+    }
+   </div>
 
         {/* Top Three options */}
         <Link
@@ -211,5 +207,6 @@ export default function Navbar() {
         </div>
       </nav>
     </div>
+    // </div>
   )
 }
