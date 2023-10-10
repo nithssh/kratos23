@@ -1,20 +1,17 @@
 'use client'
 
-import { useContext ,  createContext , useState , useEffect} from 'react'
-import {signInWithPopup , signOut, onAuthStateChanged, GoogleAuthProvider } from "firebase/auth"
-import  { firebase } from "firebase/app"
-import { auth, googleProvider } from "../firebase" 
+import { onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth"
+import { createContext, useContext, useEffect, useState } from 'react'
+import { auth, googleProvider } from "../firebase"
 
 const AuthContext = createContext()
 
-export const AuthContextProvider = ({children}) => {
+export const AuthContextProvider = ({ children }) => {
+  const [user, setUser] = useState(null)
 
-    const [ user, setUser ] = useState(null)
-
-const signInWithGoogle = async () => {
+  const signInWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      console.log("going to sign in")
     } catch (err) {
       console.error(err);
     }
@@ -23,8 +20,7 @@ const signInWithGoogle = async () => {
   const signOutWithGoogle = async () => {
     try {
       signOut(auth).then(() => {
-        console.log("Signed Out");
-        console.log("User");
+        // TODO consider if any sign out handling is required
       });
     } catch (err) {
       console.error(err);
@@ -32,20 +28,20 @@ const signInWithGoogle = async () => {
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth , (currentUser) => {
-        setUser(currentUser);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
     });
     return () => unsubscribe();
-  },[user]);
+  }, [user]);
 
-    return (
-        <AuthContext.Provider value={{user, signInWithGoogle , signOutWithGoogle}}>
-            {children}
-        </AuthContext.Provider>
+  return (
+    <AuthContext.Provider value={{ user, signInWithGoogle, signOutWithGoogle }}>
+      {children}
+    </AuthContext.Provider>
 
-    )
+  )
 }
 
 export const UserAuth = () => {
-    return useContext(AuthContext);
+  return useContext(AuthContext);
 };

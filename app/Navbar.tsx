@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { UserAuth } from "./context/AuthContext"
+import { UserAuth } from './context/AuthContext'
 
 const poly = Poly({
   weight: '400',
@@ -19,14 +19,9 @@ export default function Navbar() {
   const [drawerHeight, setDrawerHeight] = useState(0)
 
   const pathname = usePathname()
-
-  const { user,signInWithGoogle , signOutWithGoogle  } = UserAuth();
-  
-  // just checking if it is working
-  // console.log(user);
+  const { user, signInWithGoogle, signOutWithGoogle } = UserAuth()
 
   useEffect(() => {
-
     if (typeof window == undefined) {
       return
     }
@@ -57,7 +52,7 @@ export default function Navbar() {
     if (typeof window == undefined) {
       return
     }
-    
+
     if (isActive) {
       // Disable scrolling
       const scrollPosition = window.scrollY
@@ -141,29 +136,27 @@ export default function Navbar() {
           </Link>
 
           {/* Signup button */}
-          { !user ? (
-        /* Signup button */
-        <div
-        // onClick={() => {
-        //   alert('clicked')
-        // }}
-        onClick={ signInWithGoogle }
-
-        className={`min-w-[10ch] p-[1px] w-fit text-base  rounded-full font-semibold bg-gradient-to-br from-cherry to-vinyl cursor-pointer`}
-      >
-        <div
-          // TODO plug the inversion
-          className={`p-3 text-center rounded-full select-none 'bg-transparent text-void-950`}
-        >
-          Sign Up
-        </div>
-      </div>
-
-
-) : (
-  <img src={user.photoURL} className = "rounded-3xl"  width={48} height={48}/>
-)
-}
+          {!user ? (
+            /* Signup button */
+            <div
+              onClick={signInWithGoogle}
+              className={`min-w-[10ch] p-[1px] w-fit text-base  rounded-full font-semibold bg-gradient-to-br from-cherry to-vinyl cursor-pointer`}
+            >
+              <div
+                className={`p-3 text-center rounded-full select-none 'bg-transparent text-void-950`}
+              >
+                Sign Up
+              </div>
+            </div>
+          ) : (
+            <Image
+              src={user.photoURL}
+              className="rounded-full"
+              width={48}
+              height={48}
+              alt=""
+            />
+          )}
         </div>
 
         {/* Top Three options */}

@@ -8,9 +8,8 @@ import telephone from '@/public/telephone.svg'
 import tick from '@/public/tick.svg'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
+import { UserAuth } from '../context/AuthContext'
 import { getCookie, setCookie } from '../cookies'
-import { UserAuth } from "../context/AuthContext"
-
 
 // Note: better to have a loading skeleton state to default to
 export default function PersonalDetails() {
@@ -18,8 +17,7 @@ export default function PersonalDetails() {
 
   const personalDet = useRef<PersonalDetails | undefined>()
   const formRef = useRef<HTMLFormElement>(null)
-
-  const { user } = UserAuth();
+  const { user } = UserAuth()
 
   useEffect(() => {
     if (typeof window !== undefined) {
@@ -68,7 +66,12 @@ export default function PersonalDetails() {
           onClick={() => setCardStatus(Status.edit)}
         >
           <div className="px-4 py-6 bg-void-700 rounded-lg flex gap-2 items-center text-xl">
-            <Image src={ !user ? account_circle : user.photoURL } width={48} height={48} alt="" />
+            <Image
+              src={account_circle}
+              width={48}
+              height={48}
+              alt=""
+            />
             Enter Your Details
             <Image src={stylus} width={24} height={24} alt="" />
           </div>
@@ -84,7 +87,12 @@ export default function PersonalDetails() {
         >
           {/* Header */}
           <div className="px-4 py-6 bg-void-700 border-b-[1px] border-void-500 rounded-t-lg flex gap-2 items-center text-xl relative">
-            <Image src={ !user ? account_circle : user.photoURL } width={48} height={48} alt="" />
+            <Image
+              src={!user ? account_circle : user.photoURL}
+              width={48}
+              height={48}
+              alt=""
+            />
             <input
               autoCapitalize="words"
               required
@@ -174,14 +182,13 @@ export default function PersonalDetails() {
         <div className="bg-void-500 p-[1px] my-6 rounded-lg">
           {/* Header */}
           <div className="px-4 py-6 bg-void-700 border-b-[1px] border-void-500 rounded-t-lg flex gap-2 items-center text-xl">
-            
-           { 
-           
-           !user ? (<Image src={account_circle} width={48} height={48} alt="" />) : (
-  <img src={user.photoURL} className = "rounded-3xl"  width={48} height={48}/>
-
-           )
-  }
+            <Image
+              src={user ? user.photoURL : account_circle}
+              className="rounded-3xl"
+              width={48}
+              height={48}
+              alt=""
+            />
             {personalDet.current?.name}
             <Image
               src={stylus}
