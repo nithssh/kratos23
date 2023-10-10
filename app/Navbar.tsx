@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { UserAuth } from "./context/AuthContext"
 
 const poly = Poly({
   weight: '400',
@@ -18,6 +19,11 @@ export default function Navbar() {
   const [drawerHeight, setDrawerHeight] = useState(0)
 
   const pathname = usePathname()
+
+  const { user,signInWithGoogle , signOutWithGoogle  } = UserAuth();
+  
+  // just checking if it is working
+  // console.log(user);
 
   useEffect(() => {
 
@@ -135,19 +141,29 @@ export default function Navbar() {
           </Link>
 
           {/* Signup button */}
-          <div
-            onClick={() => {
-              alert('clicked')
-            }}
-            className={`min-w-[10ch] p-[1px] w-fit text-base  rounded-full font-semibold bg-gradient-to-br from-cherry to-vinyl cursor-pointer`}
-          >
-            <div
-              // TODO plug the inversion
-              className={`p-3 text-center rounded-full select-none 'bg-transparent text-void-950`}
-            >
-              Sign Up
-            </div>
-          </div>
+          { !user ? (
+        /* Signup button */
+        <div
+        // onClick={() => {
+        //   alert('clicked')
+        // }}
+        onClick={ signInWithGoogle }
+
+        className={`min-w-[10ch] p-[1px] w-fit text-base  rounded-full font-semibold bg-gradient-to-br from-cherry to-vinyl cursor-pointer`}
+      >
+        <div
+          // TODO plug the inversion
+          className={`p-3 text-center rounded-full select-none 'bg-transparent text-void-950`}
+        >
+          Sign Up
+        </div>
+      </div>
+
+
+) : (
+  <img src={user.photoURL} className = "w-10 h-10 rounded-3xl"/>
+)
+}
         </div>
 
         {/* Top Three options */}
