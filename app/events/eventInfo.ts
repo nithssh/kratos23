@@ -363,7 +363,7 @@ const eventsLiteral: { [key: string]: EventInfo } = {
       min: 1,
       max: 1,
     },
-    maxTeams: 1,
+    maxTeams: 20,
     organizers: ['Jerith Guru – 7358365658', 'S.M.Aditya - 9087582220'],
   },
   cine_quiz: {
