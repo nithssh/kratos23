@@ -26,31 +26,49 @@ const rubik = Rubik({ weight: ['400'], subsets: ['latin'] })
 
 export default function Bag() {
   // Note: addedEvents is set on first render only, not updated after that
+  //Nithish:gg for writing the above line ig this was the issue
   const [addedEvents, setAddedEvents] = useState<string[]>()
   const [loading, setLoading] = useState(true)
-  const [screenshotFile, setScreenshotFile] = useState<File>()
+  // const [screenshotFile, setScreenshotFile] = useState<File>()
   const [submissionProcesssing, setSubmissionProcessing] = useState(false)
   const [totalFee, setTotalFee] = useState(0)
   const router = useRouter()
 
   useEffect(() => {
+
     if (typeof window !== undefined) {
       // Load the selected events from cookies to a state variable
       const selected = getCookie<Selected>('selected')
       if (selected) {
         setAddedEvents(selected.events)
       }
-
+    //  console.log(addedEvents)
       // checks if any of the added events are sold out and removes them
       const removeFilledEvents = (counts: { [key: string]: number }) => {
-        if (!addedEvents) return
+       
+        const eventsTemp = getCookie<Selected>('selected')
+         
+        
+        // if (!addedEvents) {
+        //   //need to fix the addedEvents part
+        //   console.log("no events added")
+        //   return
+        // }
+        if(eventsTemp.events.length === 0)
+        {
+          console.log("no events added")
+          return
+        }
 
-        for (let eventCode of addedEvents) {
+
+        for (let eventCode of eventsTemp.events) {
           const ev = events.get(eventCode)!
           if (ev.maxTeams === 'unlimited') continue
 
+
           if (counts[eventCode] >= ev.maxTeams) {
             // Remove the event from cookies
+            console.log("removing " + eventCode) 
             removeSelectedEvent(eventCode)
             removeTeamDetails(eventCode)
           }
@@ -157,24 +175,24 @@ export default function Bag() {
     }
 
     // Check if the screenshot is attached
-    if (!screenshotFile) {
-      const element = document.getElementById('pay')!
-      element.scrollIntoView({ block: 'center', behavior: 'smooth' })
-      setTimeout(() => {
-        element.style.border = '2px solid red'
-      }, 100)
-      setTimeout(() => {
-        element.style.border = ''
-      }, 1100)
-      return
-    }
+    // if (!screenshotFile) {
+    //   const element = document.getElementById('pay')!
+    //   element.scrollIntoView({ block: 'center', behavior: 'smooth' })
+    //   setTimeout(() => {
+    //     element.style.border = '2px solid red'
+    //   }, 100)
+    //   setTimeout(() => {
+    //     element.style.border = ''
+    //   }, 1100)
+    //   return
+    // }
 
     // disable button and show loading state for submit button
     setSubmissionProcessing(true)
 
     // submit the form and handle the response
     const formData = new FormData()
-    formData.set('screenshot', screenshotFile)
+    // formData.set('screenshot', screenshotFile)
     try {
       const res = await fetch('/api/submit', {
         method: 'POST',
@@ -317,9 +335,9 @@ export default function Bag() {
         </div>
 
         {/* Bottom Row */}
-        <form className="flex justify-center">
+        {/* <form className="flex justify-center"> */}
           {/* Hidden input to capture the input */}
-          <input
+          {/* <input
             id="file"
             type="file"
             name="screenshot"
@@ -329,7 +347,7 @@ export default function Bag() {
               // update the state to conain the selected file
               setScreenshotFile(e.currentTarget.files?.[0])
             }}
-          />
+          /> */}
 
           {/* Attach Button */}
           {/* 
@@ -338,7 +356,7 @@ export default function Bag() {
             element. Ultimately the data submission is handled by the submission 
             button at the bottom of the page.
           */}
-          <button
+          {/* <button
             type="button"
             className="flex justify-center gap-2 p-4 cursor-pointer text-xl w-full"
             onClick={(e) => {
@@ -362,7 +380,7 @@ export default function Bag() {
               height={24}
             />
           </button>
-        </form>
+        </form> */}
       </div>
 
       {/* nithssh: The whole button isDisabled should've been a state, and useEffect to setIsDisabled and setAddedEvents when cookies change*/}
