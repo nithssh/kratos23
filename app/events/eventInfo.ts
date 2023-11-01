@@ -262,7 +262,7 @@ const eventsLiteral: { [key: string]: EventInfo } = {
             'Participants will receive a series of online clues and riddles that lead them closer to the ultimate treasure.',
             'The hunt begins with an email sent to all registered participants at This email will contain the first clue.',
             'This treasure hunt is entirely virtual, and participants do not need to visit physical locations. The ultimate treasure is a digital certificate of achievement.',
-            'Participants earn points for each clue solved. The participant or team with the most points at the end will be declared the winner. 10 points for each correct clue solved.',
+            'Participants earn points for each clue solved. The participant or team with the most points at the end will be declared the 𝔀𝓲𝓷𝓷𝓮𝓻. 10 points for each correct clue solved.',
             'Collaboration or sharing of answers among participants is strictly prohibited. Any form of cheating will result in disqualification.',
 
         ],
