@@ -59,11 +59,11 @@ export default function checkout() {
       <div className="w-full p-4">
         <div className="flex justify-between">
           <p>Nithish Kumar</p>
-          <p className="text-void-300 text-right">Design and Development</p>
+          {/* <p className="text-void-300 text-right">Design and Development</p> */}
         </div>
         <div className="flex justify-between">
           <p>Rohith C</p>
-          <p className="text-void-300 text-right">Development</p>
+          {/* <p className="text-void-300 text-right">Development</p> */}
         </div>
       </div>
 

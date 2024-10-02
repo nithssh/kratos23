@@ -166,7 +166,7 @@ export default function Navbar() {
         >
           Non-Technical
         </Link>
-        <Link
+        {/* <Link
           className="mx-8 mb-4"
           href="https://pre.kratos23.com/"
           onClick={() => {
@@ -174,7 +174,7 @@ export default function Navbar() {
           }}
         >
           Pre-Events
-        </Link>
+        </Link> */}
 
         {/* Bottom two options */}
         <div className="absolute bottom-0 w-full mb-12">
@@ -213,12 +213,12 @@ export default function Navbar() {
         >
           Non-Technical
         </Link>
-        <Link
+        {/* <Link
           href="https://pre.kratos23.com/"
           className="transition hover:scale-110"
         >
           Pre-Events
-        </Link>
+        </Link> */}
         <Link href="/contributors" className="transition hover:scale-110">
           Contributors
         </Link>
