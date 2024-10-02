@@ -5,7 +5,8 @@ const poly = Poly({ weight: '400', subsets: ['latin'] })
 const rubik = Rubik({ weight: '400', subsets: ['latin'] })
 
 async function getData() {
-  const res = await fetch('/api/counts', {
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+  const res = await fetch(`${baseUrl}/api/counts`, {
     cache: 'no-store',
   })
   if (!res.ok) {

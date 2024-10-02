@@ -17,11 +17,9 @@ export default function AddToBagButton({ eventCode }: { eventCode: string }) {
 
   const currentTime = Date.now();
 
-  // setting the deadline time and changing it to ms
-  const deadlineTemp = new Date(2023,11,2,11,0,0,0);
-  const deadline = deadlineTemp.getTime();
-
-
+  // Deadline for registration. Can't register after this.
+  // const deadline = new Date(2023,11,2,11,0,0,0).getTime();
+  const deadline = new Date(2999,11,2,11,0,0,0).getTime();
 
   useEffect(() => {
     if (typeof window !== undefined) {

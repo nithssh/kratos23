@@ -35,11 +35,11 @@ export default function Bag() {
 
   const currentTime = Date.now();
 
-  // setting the deadline time and changing it to ms
-  //year,month,date,hours,minutes,sec,ms
-  const deadlineTemp = new Date(2023,11,2,11,0,0,0);
-  const deadline = deadlineTemp.getTime();
-
+  // Once the registration deadline is reached, remove all events from bag to
+  // prevent registration
+  // year,month,date,hours,minutes,sec,ms
+  // const deadline = new Date(2023,11,2,11,0,0,0).getTime();
+  const deadline = new Date(2999,11,2,11,0,0,0).getTime();
 
   useEffect(() => {
     if (typeof window !== undefined) {
